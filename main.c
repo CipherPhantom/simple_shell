@@ -119,6 +119,7 @@ void emul_tty(char **lineptr, char **argv, char **envs)
 
 /**
  * catch_sigint - Handles signal SIGINT (ctrl + c) sent to the program
+ * @opt: Unused parameter
  */
 void catch_sigint(__attribute__((unused))int opt)
 {
