@@ -138,6 +138,8 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 		*lineptr = tot_stream;
 	}
 	lines = !f_cnt++ || fd == 0 ? _strtok(*lineptr, "\n") : _strtok(NULL, "\n");
+	if (_strcmp(*lineptr, "\n") == 0)
+		lines = *lineptr;
 	if (!lines)
 	{
 		*lineptr = tot_stream;

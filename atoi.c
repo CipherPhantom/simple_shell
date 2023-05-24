@@ -8,29 +8,31 @@
 
 int _atoi_cust(char *s)
 {
-	int num_found = 0, sign = 1, value = 0;
+	int num_found = 0, sign = 1, value = 0, i = 0;
 
-	while (*s)
+	while (s && s[i])
 	{
 		if (num_found)
 		{
-			if (!(*s >= 48 && *s <= 57))
+			if (!(s[i] >= 48 && s[i] <= 57))
 				return (-1);
 			value *= 10;
-			value = value < 0 ? value - (*s - '0') : value + (*s - '0');
-			s++;
+			value = value < 0 ? value - (s[i] - '0') : value + (s[i] - '0');
+			i++;
 		}
 		else
 		{
-			if (*s >= 48 && *s <= 57)
+			if (s[i] >= 48 && s[i] <= 57)
 			{
 				num_found = 1;
-				value = (*s - '0') * sign;
+				value = (s[i] - '0') * sign;
 			}
+			else if (i == 0 && ((s[i] == '+') || (s[i] == '-')))
+				sign = s[i] == '-' ? -1 : 1;
 			else
 				return (-1);
-			s++;
+			i++;
 		}
 	}
-	return (value);
+	return (value >= 0 ? value : -1);
 }
