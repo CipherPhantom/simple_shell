@@ -29,10 +29,7 @@ int exit_shell(char **args, char **envs, char **argv, char **l_ptr)
 		free_linked_list(head);
 		free_func(args, -1);
 		free_func(l_ptr, 0);
-		if (id == stor_pid())
-			exit(status);
-		else
-			_exit(status);
+		exit(status);
 	}
 	return (1);
 }
@@ -106,7 +103,7 @@ int set_env(char **args, char __attribute__((unused))**envs)
 			}
 			tmp = tmp->next;
 		}
-		tmp1 = malloc(sizeof(Node));
+		tmp1 = _realloc(NULL, 0, sizeof(Node));
 		tmp1->name = _strdup(args[1]);
 		tmp1->value = _strdup(args[2]);
 		tmp1->next = NULL;
@@ -138,10 +135,10 @@ Node *getenv_list(char **environ)
 			{
 				len++;
 			}
-			name = malloc(sizeof(char) * (len + 1));
+			name = _realloc(NULL, 0, (sizeof(char) * (len + 1)));
 			value = env + j + 1;
 			_strncpy(name, env, len);
-			tmp = malloc(sizeof(Node));
+			tmp = _realloc(NULL, 0, sizeof(Node));
 			tmp->name = name;
 			tmp->value = _strdup(value);
 			tmp->next = NULL;

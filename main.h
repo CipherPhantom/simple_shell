@@ -1,6 +1,7 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
+#include <signal.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -57,6 +58,7 @@ char *_strncat(char *dest, char *src, int n);
 char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
 char *_strdup(const char *s);
+void *_memset(void *s, int b, size_t n);
 
 
 
@@ -80,7 +82,6 @@ char *_strncpy(char *dest, char *src, int n);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void *_memcpy(void *dest, void *src, unsigned int n);
 int _atoi_cust(char *s);
-pid_t stor_pid(void);
 char *_gEnv(char *name, char **envs);
 int _cd(char **args, char **envs, char **argv);
 

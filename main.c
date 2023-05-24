@@ -12,7 +12,7 @@ char **tokens_to_arr(char *lineptr_copy, int num_tokens, const char *delim)
 	char **args = NULL, *token = NULL;
 	int i = 0;
 
-	args = malloc(sizeof(char *) * (num_tokens + 1));
+	args = _realloc(NULL, 0, sizeof(char *) * (num_tokens + 1));
 	if (!args)
 	{
 		free_func(&lineptr_copy, 0);
@@ -23,7 +23,7 @@ char **tokens_to_arr(char *lineptr_copy, int num_tokens, const char *delim)
 	token = _strtok(lineptr_copy, delim);
 	for (i = 0; token != NULL; i++)
 	{
-		args[i] = malloc(sizeof(char) * (_strlen(token) + 1));
+		args[i] = _realloc(NULL, 0, sizeof(char) * (_strlen(token) + 1));
 		if (!args[i])
 		{
 			free_func(&lineptr_copy, 0);
@@ -118,20 +118,13 @@ void emul_tty(char **lineptr, char **argv, char **envs)
 }
 
 /**
-  *stor_pid - This stores the initial pid of the program
-  *Return: The PID
-  *
-  */
-
-pid_t stor_pid(void)
+ * catch_sigint - Handles signal SIGINT (ctrl + c) sent to the program
+ */
+void catch_sigint(__attribute__((unused))int opt)
 {
-	static pid_t the_pid;
-
-	if (!the_pid)
-		the_pid = getpid();
-	return (the_pid);
+	write(STDOUT_FILENO, "\n", 1);
+	write(STDOUT_FILENO, "($) ", 4);
 }
-
 
 /**
   * main - This program mimics the UNIX shell.
@@ -145,7 +138,7 @@ int main(int __attribute__((unused))argc, char *argv[], char **envs)
 	char *lineptr = NULL;
 	Node *head = getenv_list(envs);
 
-	stor_pid();
+	signal(SIGINT, catch_sigint);
 	while (1)
 	{
 		emul_tty(&lineptr, argv, envs);
